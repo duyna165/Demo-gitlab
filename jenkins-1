@@ -1,19 +1,12 @@
-pipeline {
-    agent any
-    environment{
-        SONARSERVER = 'sonar'
-        SONARSCANNER = 'sonarscanner' 
-    }      
-    stage('CODE ANALYSIS with SONARQUBE') {          
-      def scannerHome = tool "${SONARSCANNER}"
-      withSonarQubeEnv("${SONARSERVER}") {
-               sh '''${scannerHome}/bin/sonar-scanner \
-                   -Dsonar.login=admin \
-                   -Dsonar.password=admin \
-                   -Dsonar.projectKey=duyna \
-                   -D sonar.exclusions=vendor/**,resources/**,**/*.java \
-                   -D sonar.host.url=http:http://54.159.46.23/"
-      }
-   }
-}  
+  stage('SonarQube analysis') {
+    def scannerHome = tool 'sonarscanner';
+    withSonarQubeEnv('sonar') {
+      sh "${scannerHome}/bin/sonar-scanner \
+      -D sonar.login=admin \
+      -D sonar.password=admin \
+      -D sonar.projectKey=duyna \
+      -D sonar.exclusions=vendor/**,resources/**,**/*.java \
+      -D sonar.host.url=http://54.159.46.23/"
+    }
+  }
 }
