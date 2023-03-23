@@ -2,10 +2,30 @@ pipeline {
     agent any
     environment{
         DOCKER_IMAGE = "duyna165/test"
-        SONARSERVER = 'sonar'
-        SONARSCANNER = 'sonarscanner'
-    } 
+         } 
+     
     stages {
+        SONARSERVER = 'sonar'
+        SONARSCANNER = 'sonarscanner'  
+        stage('CODE ANALYSIS with SONARQUBE') {
+          
+          environment {
+             scannerHome = tool "${SONARSCANNER}"
+          }
+
+          steps {
+            withSonarQubeEnv("${SONARSERVER}") {
+               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                   -Dsonar.projectName=vprofile-repo \
+                   -Dsonar.projectVersion=1.0 \
+                   -Dsonar.sources=src/ \
+                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
+            }
+
+          }
         stage("Build"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
@@ -29,26 +49,6 @@ pipeline {
                 sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
- 
- stage('CODE ANALYSIS with SONARQUBE') {
-          
-          environment {
-             scannerHome = tool "${SONARSCANNER}"
-          }
-
-          steps {
-            withSonarQubeEnv("${SONARSERVER}") {
-               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=vprofile-repo \
-                   -Dsonar.projectVersion=1.0 \
-                   -Dsonar.sources=src/ \
-                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
-                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
-            }
-
-          }
         stage("Deploy"){
             options {
                 timeout(time: 10, unit: 'MINUTES')
