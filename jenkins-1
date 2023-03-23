@@ -12,7 +12,7 @@ pipeline {
                    -Dsonar.password=admin \
                    -Dsonar.projectKey=duyna \
                    -D sonar.exclusions=vendor/**,resources/**,**/*.java \
-                   -D sonar.host.url=http:http://54.159.46.23/
+                   -D sonar.host.url=http:http://54.159.46.23/"
       }
    }
 }  
