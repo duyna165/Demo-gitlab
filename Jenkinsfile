@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment{
         DOCKER_IMAGE = "duyna165/test"
-    }
- SONARSERVER = 'sonar'
-SONARSCANNER = 'sonarscanner'
+        SONARSERVER = 'sonar'
+        SONARSCANNER = 'sonarscanner'
+    } 
     stages {
         stage("Build"){
             options {
@@ -29,6 +29,7 @@ SONARSCANNER = 'sonarscanner'
                 sh "docker image rm ${DOCKER_IMAGE}:latest"
             }
         }
+ 
  stage('CODE ANALYSIS with SONARQUBE') {
           
           environment {
