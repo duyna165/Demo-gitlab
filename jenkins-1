@@ -5,17 +5,14 @@ pipeline {
         SONARSCANNER = 'sonarscanner' 
     }      
     stage('CODE ANALYSIS with SONARQUBE') {          
-          environment {
-             scannerHome = tool "${SONARSCANNER}"
-          }
-          steps {
-            withSonarQubeEnv("${SONARSERVER}") {
+      def scannerHome = tool "${SONARSCANNER}"
+      withSonarQubeEnv("${SONARSERVER}") {
                sh '''${scannerHome}/bin/sonar-scanner \
                    -Dsonar.login=admin \
                    -Dsonar.password=admin \
                    -Dsonar.projectKey=duyna \
                    -D sonar.exclusions=vendor/**,resources/**,**/*.java \
                    -D sonar.host.url=http:http://54.159.46.23/
-            }
-          }
-    }  
+      }
+   }
+}  
