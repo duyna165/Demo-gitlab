@@ -1,3 +1,7 @@
+  node {
+  stage('Clone the Git') {
+    git 'https://github.com/duyna165/Demo-gitlab.git'
+  }
   stage('SonarQube analysis') {
     def scannerHome = tool 'sonarscanner';
     withSonarQubeEnv('sonar') {
@@ -9,4 +13,4 @@
       -D sonar.host.url=http://54.159.46.23/"
     }
   }
-
+}
