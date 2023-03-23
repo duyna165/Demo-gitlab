@@ -2,10 +2,10 @@ pipeline {
     agent any
     environment{
         DOCKER_IMAGE = "duyna165/test"
-    }
-    stages {
         SONARSERVER = 'sonarserver'
-        SONARSCANNER = 'sonar'
+        SONARSCANNER = 'sonar' 
+    }
+    stages {        
     stage('CODE ANALYSIS with SONARQUBE') {          
           environment {
              scannerHome = tool "${SONARSCANNER}"
