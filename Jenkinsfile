@@ -5,9 +5,8 @@ pipeline {
     }
     stages {
         SONARSERVER = 'sonarserver'
-        SONARSCANNER = 'sonarscanner'
- stage('CODE ANALYSIS with SONARQUBE') {
-          
+        SONARSCANNER = 'sonar'
+    stage('CODE ANALYSIS with SONARQUBE') {          
           environment {
              scannerHome = tool "${SONARSCANNER}"
           }
