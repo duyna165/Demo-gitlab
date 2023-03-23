@@ -78,3 +78,4 @@ SONARSCANNER = 'sonarscanner'
         }
     }
 }
+}
