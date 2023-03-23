@@ -3,10 +3,8 @@ pipeline {
     environment{
         DOCKER_IMAGE = "duyna165/test"
     }
-   ##new environment variables to be added to environment##
 SONARSERVER = 'sonar'
 SONARSCANNER = 'sonarscanner'
-    ##new stages to be added##
  stage('CODE ANALYSIS with SONARQUBE') {
           
           environment {
