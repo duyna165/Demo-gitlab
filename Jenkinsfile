@@ -12,14 +12,13 @@ pipeline {
           }
           steps {
             withSonarQubeEnv("${SONARSERVER}") {
-               sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=duyna \
-                   -Dsonar.projectName=vprofile-repo \
-                   -Dsonar.projectVersion=1.0 \
+               sh '''${scannerHome}/bin/sonar-scanner \
+                   -Dsonar.login=admin \
+                   -Dsonar.password=admin \
                    -Dsonar.sources=src/ \
-                   -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
-                   -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
+                   -Dsonar.projectKey=duyna \
+                   -D sonar.exclusions=vendor/**,resources/**,**/*.java \
+                   -D sonar.host.url=http:http://54.159.46.23/
             }
           }
     }  
